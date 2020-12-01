@@ -3,7 +3,7 @@
     <Layout :style="{ minHeight: '100vh' }">
       <Sider collapsible :collapsed-width="78" v-model="isCollapsed">
         <Menu
-          active-name="1-2"
+          active-name="1-1"
           theme="dark"
           width="auto"
           :class="menuitemClasses"
@@ -32,7 +32,7 @@
           <Breadcrumb :style="{ margin: '16px 0' }"> </Breadcrumb>
           <Card>
             <div style="height: 600px" v-if="showId == 1">
-            
+            <card></card>
             </div>
             <div style="height: 600px" v-if="showId == 2">
               <user></user>
@@ -45,16 +45,17 @@
 </template>
 <script>
 import user from '@/components/user'
-
+import card from '@/components/card'
 export default {
   name: "manage",
   components: {
-   user
+   user,
+   card
   },
   data() {
     return {
       isCollapsed: false,
-      showId: 2,
+      showId: 1,
     };
   },
   computed: {

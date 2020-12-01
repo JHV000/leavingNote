@@ -3,7 +3,7 @@
     <Layout :style="{ minHeight: '100vh' }">
       <Sider collapsible :collapsed-width="78" v-model="isCollapsed">
         <Menu
-          active-name="1-2"
+          active-name="1-1"
           theme="dark"
           width="auto"
           :class="menuitemClasses"
@@ -60,7 +60,7 @@ export default {
   data() {
     return {
       isCollapsed: false,
-      showId: 2,
+      showId: 1,
     };
   },
   computed: {

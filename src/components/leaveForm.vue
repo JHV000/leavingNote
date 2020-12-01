@@ -46,6 +46,7 @@ import global from '@/comm/global'
                 // console.log(this.formValidate);
                 this.$axios.post("/leave/addLeave",{
                     uid:this.formValidate.uid,
+                    username:this.formValidate.name,
                     starttime:this.formValidate.starttime,
                     endtime:this.formValidate.endtime,
                     reason:this.formValidate.reason
