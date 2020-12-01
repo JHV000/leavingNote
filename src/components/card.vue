@@ -1,4 +1,5 @@
 <template>
+<div>
 <div class="card-part">
 <div class="card" v-for="(item,index) in list" v-bind:key="index">
   <img v-if="item.status==1" class="yinzhang" src="../assets/pass.png">
@@ -32,34 +33,52 @@
     </Card>
     </div>
     </div>
+    <Page :total="pageTotal" :current="pageIndex" :page-size="6"  @on-change="getIndex" class-name="pageIndex" />
+    </div>
 </template>
 <script>
 export default {
-  inject:["reload"],
+  inject: ["reload"],
   data() {
     return {
+      pageIndex:1,
+      pageTotal:50,
       list: [],
     };
   },
   created() {
-    this.$axios.get("/leave/showAll").then((res) => {
-      this.list = res;
-    });
+    this.getData()
   },
   methods: {
-    change(id){
-      this.$axios.get("/leave/checkLeave",{
-        params:{
-          id:id
-        }
-      }).then((res)=>{
-        if(res==1){
-          this.reload()
-          this.$Message.success("审核通过！")
-        }else {
-          this.$Message.success("审核失败！")
-        }
-      })
+    getData(){
+      this.$axios.get("/leave/showAll",{
+      params:{
+        index:this.pageIndex
+      }
+    }).then((res) => {
+      this.list = res;
+    });
+    },
+    change(id) {
+      this.$axios
+        .get("/leave/checkLeave", {
+          params: {
+            id: id,
+          },
+        })
+        .then((res) => {
+          if (res == 1) {
+            this.reload();
+            this.$Message.success("审核通过！");
+          } else {
+            this.$Message.success("审核失败！");
+          }
+        });
+    },
+    getIndex(index){
+      this.pageIndex = index
+      this.getData()
+      // console.log(index);
     }
   },
 };
@@ -72,6 +91,7 @@ export default {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  position: relative;
 }
 .card {
   padding: 10px;
@@ -85,5 +105,10 @@ export default {
   transform: rotate(-36deg);
   right: -19px;
   z-index: 1;
+}
+.pageIndex {
+  position: absolute;
+  bottom: 100px;
+  right: 150px;
 }
 </style>

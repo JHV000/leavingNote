@@ -33,6 +33,7 @@
           <Card>
             <div style="height: 600px" v-if="showId == 1">
             <card></card>
+             
             </div>
             <div style="height: 600px" v-if="showId == 2">
               <user></user>

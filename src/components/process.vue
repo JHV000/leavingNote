@@ -1,6 +1,15 @@
 <template>
   <div class="process">
-    <div class="title">
+    <Table border :columns="columns1" :data="result">
+        <template slot-scope="{ row }" slot="name">
+            <strong>{{ row.name }}</strong>
+        </template>
+        <template slot-scope="{ row, index }" slot="status">
+            <Button type="primary" size="small" style="margin-right: 5px" @click="show(index)">View</Button>
+            <Button type="error" size="small" @click="remove(index)">Delete</Button>
+        </template>
+    </Table>
+    <!-- <div class="title">
       <span v-for="(item, index) in columns1">{{ item.title }}</span>
     </div>
     <div class="detail" v-for="(item, index) in result">
@@ -11,7 +20,7 @@
       <div>{{ item.endtime }}</div>
       <div>{{ item.reason }}</div>
       <div  v-if="item.status==1"><span class="green">通过</span></div>
-      <div  v-if="item.status==0"><span class="red">待审</span></div>
+      <div  v-if="item.status==0"><span class="red">待审</span></div> -->
       
     </div>
     <!-- <Steps :current="2" size="small">
@@ -41,6 +50,7 @@ export default {
         },
         {
           title: "姓名",
+          key:"username"
         },
         {
           title: "起始时间",

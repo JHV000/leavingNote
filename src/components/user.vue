@@ -1,10 +1,23 @@
 <template>
-  <Table border :columns="columns7" :data="data6"></Table>
+<div>
+  <div class="search">
+<Input  search enter-button="搜索" @on-search="search" placeholder="请输入姓名..." />
+  </div>
+  
+  <div class="table">
+<Table border :columns="columns7" :data="data6"></Table>
+  </div>
+   <Page :total="pageTotal" :current="pageIndex" :page-size="6"  @on-change="getIndex" class-name="pageIndex" />
+</div>
+  
+  
 </template>
 <script>
 export default {
   data() {
     return {
+      pageIndex:1,
+      pageTotal:50,
       columns7: [
         {
           title: "工号",
@@ -56,12 +69,34 @@ export default {
     };
   },
   created() {
-    this.$axios.get("/user/queryAll").then((res) => {
-      this.data6 = res;
-      //   console.log(res);
-    });
+   this.getUserData()
   },
   methods: {
+    search(chara){
+      this.$axios.get("/user/search",{
+        params:{
+          chara:chara
+        }
+      }).then((res)=>{
+        this.data6 = res
+      })
+      
+    },
+    getUserData(){
+       this.$axios.get("/user/queryAll",{
+         params:{
+           index:this.pageIndex
+         }
+       }).then((res) => {
+      this.data6 = res;
+      
+    });
+    },
+    getIndex(index){
+      this.pageIndex = index
+      this.getUserData()
+      // console.log(index);
+    },
     delete(row, index) {
       // console.log(row);
       var username = row.username;
@@ -93,3 +128,9 @@ export default {
   },
 };
 </script>
+<style>
+.search {
+  width: 60%;
+  margin: 20px auto;
+}
+</style>
