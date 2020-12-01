@@ -1,5 +1,10 @@
 <template>
   <div class="container">
+    <div class="nav">
+      <router-link to="/">Login</router-link>
+      <span> / </span>
+      <router-link to="/register">Register</router-link>
+    </div>
     <div class="form-part">
       <Form ref="formInline" :model="formInline" :rules="ruleInline" inline>
         <FormItem prop="user">
@@ -25,15 +30,13 @@
           <Button type="primary" @click="handleSubmit('formInline')"
             >Signin</Button
           >
-          <Button @click="handleReset('formValidate')" style="margin-left: 8px"
-            >Reset</Button
-          >
         </FormItem>
       </Form>
     </div>
   </div>
 </template>
 <script>
+import global from '@/comm/global'
 export default {
   name: "login",
   data() {
@@ -41,6 +44,7 @@ export default {
       formInline: {
         username: "",
         password: "",
+        path:''
       },
       ruleInline: {
         username: [
@@ -74,28 +78,35 @@ export default {
           password: this.formInline.password,
         })
         .then((res) => {
-          console.log(res);
-          if(res==1){
-             this.$Message.success("登录成功！");
-          }else {
+          // console.log(res);
+          if (res != null) {
+            this.$Message.success("登录成功！");
+            if(this.formInline.username=="admin"){
+              this.formInline.path = "/manage"
+            }else {
+              this.formInline.path = "/leave"
+            }
+            this.$router.push({
+              path:this.formInline.path,
+             
+            });
+            global.username = this.formInline.username,
+            global.uid = res
+          } else {
             this.$Message.error("登录失败！");
           }
         });
-      // this.$refs[name].validate((valid) => {
-      //   if (valid) {
-      //     this.$Message.success("Success!");
-      //   } else {
-      //     this.$Message.error("Fail!");
-      //   }
-      // });
-    },
-    handleReset(name) {
-      this.$refs[name].resetFields();
     },
   },
 };
 </script>
 <style>
+.container {
+  background-color: #515a6e;
+  /* color: #2c3e50; */
+  height: 300px;
+  text-align: center;
+}
 .form-part {
   height: 300px;
   border: 1px solid gray;
@@ -108,6 +119,22 @@ export default {
   right: 0px;
   padding: 75px 5px 0px 5px;
 }
+.nav {
+  text-align: center;
+  color: #000; 
+  padding-top: 50px;
+}
+.nav a {
+  color: #000;
+  font-size: 20px;
+}
+.nav a:hover {
+  text-decoration: underline;
+  color: #000;
+}
+.nav a.router-link-exact-active {
+    color: white;
+  }
 </style>
 
     
