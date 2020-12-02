@@ -80,6 +80,8 @@ export default {
         .then((res) => {
           // console.log(res);
           if (res != null) {
+             window.sessionStorage.setItem("cat_uid", res);
+             window.sessionStorage.setItem("cat_username", this.formInline.username);
             this.$Message.success("登录成功！");
             if(this.formInline.username=="admin"){
               this.formInline.path = "/manage"
@@ -90,8 +92,8 @@ export default {
               path:this.formInline.path,
              
             });
-            global.username = this.formInline.username,
-            global.uid = res
+            // global.username = this.formInline.username,
+            // global.uid = res
           } else {
             this.$Message.error("登录失败！");
           }

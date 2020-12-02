@@ -28,13 +28,15 @@
     </div>
 </template>
 <script>
+const cat_username = window.sessionStorage.getItem("cat_username");
+const cat_uid = window.sessionStorage.getItem("cat_uid");
 import global from '@/comm/global'
     export default {
         data () {
             return {
                 formValidate: {
-                    uid:global.uid,
-                    name: global.username,
+                    uid:cat_uid,
+                    name: cat_username,
                     reason:'',
                     starttime:'',
                     endtime:''
@@ -58,13 +60,6 @@ import global from '@/comm/global'
                     }
                 })
 
-                // this.$refs[name].validate((valid) => {
-                //     if (valid) {
-                //         this.$Message.success('Success!');
-                //     } else {
-                //         this.$Message.error('Fail!');
-                //     }
-                // })
             },
             handleReset (name) {
                 this.$refs[name].resetFields();

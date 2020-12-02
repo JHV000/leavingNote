@@ -41,6 +41,9 @@
             <div style="height: 600px" v-if="showId == 2">
               <process></process>
             </div>
+            <div style="height: 600px" v-if="showId == 3">
+              <myinfo></myinfo>
+            </div>
           </Card>
         </Content>
       </Layout>
@@ -50,12 +53,14 @@
 <script>
 import leaveForm from "@/components/leaveForm";
 import process from "@/components/process";
+import myinfo from '@/components/myinfo';
 
 export default {
   name: "leave",
   components: {
     leaveForm,
     process,
+    myinfo
   },
   data() {
     return {
